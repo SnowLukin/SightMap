@@ -26,7 +26,17 @@ class LocationsViewModel: ObservableObject {
         longitudeDelta: 0.1
     )
     
-    private let errorLocation = Location(name: "Error", cityName: "Error", coordinates: CLLocationCoordinate2D(latitude: 41.8902, longitude: 12.4922) , description: "Error", imageName: "parisImage", link: "https://en.wikipedia.org/wiki/")
+    private let errorLocation = Location(
+        name: "Error",
+        cityName: "Error",
+        coordinates: CLLocationCoordinate2D(
+            latitude: 41.8902,
+            longitude: 12.4922
+        ),
+        description: "Error",
+        imageName: "parisImage",
+        link: "https://en.wikipedia.org/wiki/"
+    )
     
     // Show list of locations
     @Published var showLocationList = false
@@ -53,6 +63,28 @@ extension LocationsViewModel {
             mapLocation = location
             showLocationList = false
         }
+    }
+    
+    func nextButtonPressed() {
+        guard let currentIndex = locations.firstIndex(where: { $0 == mapLocation }) else {
+            print("Could not find current index in array of locations")
+            return
+        }
+        
+        // Check if currentIndex is valid
+        let nextIndex = currentIndex + 1
+        guard locations.indices.contains(nextIndex) else {
+            // Next index IS NOT valid
+            // Restart from index 0
+            guard let nextLocation = locations.first else { return }
+            showNextLocation(location: nextLocation)
+            return
+        }
+        // Next index IS valid
+        let nextLocation = locations[nextIndex]
+        showNextLocation(location: nextLocation)
+        
+        
     }
 }
 

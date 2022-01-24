@@ -18,10 +18,23 @@ struct LocationsView: View {
                 .ignoresSafeArea()
             
             VStack(spacing: 0) {
-                
                 header
                 
                 Spacer()
+                
+                ZStack {
+                    ForEach(viewModel.locations) { location in
+                        if viewModel.mapLocation == location {
+                            LocationPreviewView(location: location)
+                                .shadow(color: .black.opacity(0.3), radius: 20)
+                                .padding()
+                                .transition(.asymmetric(
+                                    insertion: .move(edge: .trailing),
+                                    removal: .move(edge: .leading))
+                                )
+                        }
+                    }
+                }
             }
         }
     }
@@ -30,7 +43,7 @@ struct LocationsView: View {
 struct LocationsView_Previews: PreviewProvider {
     static var previews: some View {
         LocationsView()
-            .previewDevice("iPhone 11 Pro")
+            .previewDevice("iPhone 13")
             .environmentObject(LocationsViewModel())
     }
 }
