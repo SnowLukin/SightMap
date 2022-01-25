@@ -13,7 +13,7 @@ struct Location: Identifiable, Equatable {
     let cityName: String
     let coordinates: CLLocationCoordinate2D
     let description: String
-    let imageName: String
+    let imagesName: [String]
     let link: String
     
     // Identifiable

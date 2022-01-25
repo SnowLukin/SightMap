@@ -21,7 +21,8 @@ class LocationsViewModel: ObservableObject {
     }
     
     @Published var mapRegion = MKCoordinateRegion()
-    private let mapSpan = MKCoordinateSpan(
+    
+    let mapSpan = MKCoordinateSpan(
         latitudeDelta: 0.1,
         longitudeDelta: 0.1
     )
@@ -34,12 +35,15 @@ class LocationsViewModel: ObservableObject {
             longitude: 12.4922
         ),
         description: "Error",
-        imageName: "parisImage",
+        imagesName: ["parisImage", "parisImage", "parisImage"],
         link: "https://en.wikipedia.org/wiki/"
     )
     
     // Show list of locations
     @Published var showLocationList = false
+    
+    // Show location detail view sheet
+    @Published var sheetLocation: Location? = nil
     
     init() {
         let locations = LocationsDataService.locations

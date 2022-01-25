@@ -50,11 +50,19 @@ struct LocationPreviewView_Previews: PreviewProvider {
 extension LocationPreviewView {
     private var imageSection: some View {
         ZStack {
-            Image(location.imageName)
-                .resizable()
-                .scaledToFill()
-                .frame(width: 100, height: 100)
-                .cornerRadius(10)
+            if let imageName = location.imagesName.first {
+                Image(imageName)
+                    .resizable()
+                    .scaledToFill()
+                    .frame(width: 100, height: 100)
+                    .cornerRadius(10)
+            } else {
+                Image(systemName: "nosign")
+                    .resizable()
+                    .scaledToFill()
+                    .frame(width: 100, height: 100)
+                    .cornerRadius(10)
+            }
         }
         .padding(6)
         .background(.white)
@@ -74,7 +82,7 @@ extension LocationPreviewView {
     
     private var learnButton: some View {
         Button {
-            
+            viewModel.sheetLocation = location
         } label: {
             Text("Learn more")
                 .font(.headline)

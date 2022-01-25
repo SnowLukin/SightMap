@@ -23,13 +23,16 @@ struct LocationsView: View {
                 locationsPreviewStack
             }
         }
+        .sheet(item: $viewModel.sheetLocation, onDismiss: nil) { location in
+            LocationDetailView(location: location)
+        }
     }
 }
 
 struct LocationsView_Previews: PreviewProvider {
     static var previews: some View {
         LocationsView()
-            .previewDevice("iPhone 13")
+            .previewDevice("iPhone SE (1st generation)")
             .environmentObject(LocationsViewModel())
     }
 }
@@ -42,22 +45,23 @@ extension LocationsView {
             Button {
                 viewModel.toggleLocationList()
             } label: {
-                Text(viewModel.mapLocation.name + ", " + viewModel.mapLocation.cityName)
-                    .font(.title2)
-                    .fontWeight(.semibold)
-                    .frame(height: 55)
-                    .frame(maxWidth: .infinity)
-                    .foregroundColor(.primary)
-                    .animation(.none, value: viewModel.mapLocation)
-                    .overlay(alignment: .leading) {
-                        Image(systemName: "arrow.down")
-                            .font(.headline)
-                            .foregroundColor(.primary)
-                            .padding()
-                            .rotationEffect(
-                                Angle(degrees: viewModel.showLocationList ? 180 : 0)
-                            )
-                    }
+                HStack(spacing: 0) {
+                    Image(systemName: "arrow.down")
+                        .font(.headline)
+                        .foregroundColor(.primary)
+                        .padding()
+                        .rotationEffect(
+                            Angle(degrees: viewModel.showLocationList ? 180 : 0)
+                        )
+                        .background(.blue)
+                    
+                    Text(viewModel.mapLocation.name)
+                        .font(.title3)
+                        .fontWeight(.semibold)
+                        .frame(maxWidth: .infinity)
+                        .foregroundColor(.primary)
+                        .animation(.none, value: viewModel.mapLocation)
+                }
             }
 
             

@@ -37,7 +37,7 @@ struct LocationsListView_Previews: PreviewProvider {
 extension LocationsListView {
     private func showListView(location: Location) -> some View {
         HStack {
-            if let imageName = location.imageName {
+            if let imageName = location.imagesName.first {
                 Image(imageName)
                     .resizable()
                     .scaledToFill()
